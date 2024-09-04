@@ -15,7 +15,7 @@ public sealed class UserRepository : IUserRepository
         this.repository = repository;
 
         // test purpose only
-        if (repository.GetDbSet().FirstOrDefault(u => u.Username.Equals(Roles.Admin)) is null)
+        if (repository.GetDbSet().FirstOrDefault(u => u.Username.Equals(Roles.Admin.ToLower())) is null)
         {
             var ct = new CancellationToken();
             var guid = Guid.NewGuid().ToString();

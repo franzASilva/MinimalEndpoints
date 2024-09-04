@@ -16,7 +16,7 @@ public class DummyEndpoint : IEndpoint
         var dummyGroup = app
             .MapGroup($"/{prefix}")
             .WithTags($"{prefix} API")
-            .RequireAuthorization(new AuthorizeAttribute() { Roles = $"{ Roles.Admin},{Roles.User}" });
+            .RequireAuthorization(new AuthorizeAttribute() { Roles = $"{Roles.Admin},{Roles.User}" });
 
         dummyGroup.MapGet("/", GetAll).HasApiVersion(new ApiVersion(1.1));
         dummyGroup.MapGet("/complete", GetComplete).HasApiVersion(new ApiVersion(1.1));
