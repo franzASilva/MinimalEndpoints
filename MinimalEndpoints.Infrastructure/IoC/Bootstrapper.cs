@@ -11,7 +11,7 @@ public static class Bootstrapper
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
-        services.AddDbContext<MinimalEndpointsDbContext>();        
+        services.AddDbContext<MinimalEndpointsDbContext>();   
         services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
         services.AddTransient<IDummyRepository, DummyRepository>();
         services.AddTransient<IUserRepository, UserRepository>();
@@ -22,7 +22,6 @@ public static class Bootstrapper
         services.AddScoped<IPasswordHashService, PasswordHashService>();
         services.AddSingleton<IJwtTokenService, JwtTokenService>();
         
-
         return services;
     }
 }

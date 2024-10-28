@@ -21,7 +21,7 @@ public class AuthEndpoint : IEndpoint
            .WithSummary("Log in")
            .WithDescription("Log user in")
            .Produces<string>(StatusCodes.Status200OK)
-           .Produces(StatusCodes.Status400BadRequest);
+           .ProducesProblem(StatusCodes.Status400BadRequest);
     }
 
     private async Task<IResult> Login(IUserService userService, LoginUserModel loginUserModel, CancellationToken ct) => 

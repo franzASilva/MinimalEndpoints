@@ -16,7 +16,7 @@ public class DummyEndpoint : IEndpoint
         var dummyGroup = app
             .MapGroup($"/{prefix}")
             .WithTags($"{prefix} API")
-            .RequireAuthorization(new AuthorizeAttribute() { Roles = $"{Roles.Admin},{Roles.User}" });
+            .RequireAuthorization(new AuthorizeAttribute() { Roles = $"{RolesConst.Admin},{RolesConst.User}" });
 
         dummyGroup.MapGet("/", GetAll).HasApiVersion(new ApiVersion(1.1));
         dummyGroup.MapGet("/complete", GetComplete).HasApiVersion(new ApiVersion(1.1));
@@ -69,11 +69,9 @@ public class DummyEndpoint : IEndpoint
 
     private async Task<IResult> Delete(IDummyService dummyService, int id, CancellationToken ct)
     {
-        if (await dummyService.DeleteAsync(id, ct) is (not null or > 0))
-        {
-            return TypedResults.Ok();
-        }
-
-        return TypedResults.NotFound();
+        return await dummyService.DeleteAsync(id, ct)
+            is (not null or > 0)
+                ? TypedResults.Ok()
+                : TypedResults.NotFound();
     }
 }

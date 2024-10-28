@@ -15,11 +15,11 @@ public sealed class UserRepository : IUserRepository
         this.repository = repository;
 
         // test purpose only
-        if (repository.GetDbSet().FirstOrDefault(u => u.Username.Equals(Roles.Admin.ToLower())) is null)
+        if (repository.GetDbSet().FirstOrDefault(u => u.Username.Equals(RolesConst.Admin.ToLower())) is null)
         {
             var ct = new CancellationToken();
             var guid = Guid.NewGuid().ToString();
-            var roleId = roleService.GetAllAsync(ct).Result?.FirstOrDefault(r => r.Description.Equals(Roles.Admin));
+            var roleId = roleService.GetAllAsync(ct).Result?.FirstOrDefault(r => r.Description.Equals(RolesConst.Admin));
 
             repository.CreateAsync(new User
             {
@@ -27,7 +27,7 @@ public sealed class UserRepository : IUserRepository
                 Guid = guid,
                 PasswordHash = passwordHashService.HashSHA1("123" + guid),
                 RoleId = roleId?.Id,
-                Username = Roles.Admin.ToLower()
+                Username = RolesConst.Admin.ToLower()
             }, ct).Wait(ct);
         }
     }
