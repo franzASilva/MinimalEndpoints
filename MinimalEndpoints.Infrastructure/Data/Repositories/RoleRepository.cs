@@ -17,7 +17,7 @@ public sealed class RoleRepository : IRoleRepository
         if (repository.GetDbSet().ToList().Count <= 0)
         {
             var ct = new CancellationToken();
-            Type type = typeof(Roles);
+            Type type = typeof(RolesConst);
             var flags = BindingFlags.Static | BindingFlags.Public;
             var fields = type.GetFields(flags);
 
