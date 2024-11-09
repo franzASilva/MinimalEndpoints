@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using MinimalEndpoints.API.Endpoints.Interfaces;
 using MinimalEndpoints.Domain.Constants;
+using MinimalEndpoints.Domain.Entities;
 using MinimalEndpoints.Domain.Model;
 using MinimalEndpoints.Domain.Services.Interfaces;
 
@@ -20,7 +21,7 @@ public class DummyEndpoint : IEndpoint
 
         dummyGroup.MapGet("/", GetAll).HasApiVersion(new ApiVersion(1.1));
         dummyGroup.MapGet("/complete", GetComplete).HasApiVersion(new ApiVersion(1.1));
-        dummyGroup.MapGet("/{id}", Get).HasApiVersion(new ApiVersion(1.1));
+        dummyGroup.MapGet("/{id}", Get).WithName("GetDummy").HasApiVersion(new ApiVersion(1.1));
         dummyGroup.MapGet("/", () => "Deprecated").HasDeprecatedApiVersion(new ApiVersion(1.0));
         dummyGroup.MapPost("/", Create).HasApiVersion(new ApiVersion(1.1));
         dummyGroup.MapPut("/", Update).HasApiVersion(new ApiVersion(1.1));
@@ -54,8 +55,8 @@ public class DummyEndpoint : IEndpoint
     private async Task<IResult> Create(IDummyService dummyService, DummyModel dummyModel, CancellationToken ct)
     {
         return await dummyService.CreateAsync(dummyModel, ct)
-            is DummyModel dummy
-                ? TypedResults.Created($"{prefix}/{dummy.Id}", dummy)
+        is DummyModel dummy
+                ? TypedResults.CreatedAtRoute(routeName: "GetDummy", routeValues: new { id = dummy.Id }, value: dummy)
                 : TypedResults.BadRequest();
     }
 
