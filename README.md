@@ -34,7 +34,7 @@ We can only use DummyEndpoint with Admin or User roles, while in UserEndpoint we
 <img src="https://github.com/user-attachments/assets/1e2ec399-b5c1-4ac7-b0ce-763099e99a66" width="500"><br />
 
 <br />
-<b>Healthcheck with same details</b><br />
+<b>Healthcheck with some details</b><br />
 <a href="https://localhost:7101/healthcheck">https://localhost:7101/healthcheck</a><br />
 
 <img src="https://github.com/user-attachments/assets/019a8079-f7e7-4236-914f-701cd2e94eae" width="500">
