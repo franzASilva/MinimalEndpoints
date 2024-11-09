@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using MinimalEndpoints.API.Endpoints.Interfaces;
 using MinimalEndpoints.Domain.Constants;
-using MinimalEndpoints.Domain.Entities;
 using MinimalEndpoints.Domain.Model;
 using MinimalEndpoints.Domain.Services.Interfaces;
 
