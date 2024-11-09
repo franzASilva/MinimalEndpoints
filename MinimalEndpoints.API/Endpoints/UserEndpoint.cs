@@ -26,6 +26,7 @@ public class UserEndpoint : IEndpoint
         userGroup.MapGet("/{guid}", Get)
             .WithSummary("Get user")
             .WithDescription("Get one user by guid")
+            .WithName("GetUser")
             .Produces<UserModel>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound);
 
@@ -68,7 +69,7 @@ public class UserEndpoint : IEndpoint
     {
         return await userService.CreateAsync(createUserModel, ct)
             is UserModel user
-                ? TypedResults.Created($"{context.Request.Path}/{user.Guid}", user)
+                ? TypedResults.CreatedAtRoute(routeName: "GetUser", routeValues: new { guid = user.Guid }, value: user)
                 : TypedResults.Problem(statusCode: StatusCodes.Status400BadRequest);
     }
 
