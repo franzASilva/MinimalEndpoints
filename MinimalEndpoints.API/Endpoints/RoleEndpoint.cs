@@ -20,11 +20,9 @@ public class RoleEndpoint : IEndpoint
         userGroup.MapGet("/", GetAll);
     }
 
-    private async Task<IResult> GetAll(IRoleService roleService, CancellationToken ct)
-    {
-        return await roleService.GetAllAsync(ct)
+    private async Task<IResult> GetAll(IRoleService roleService, CancellationToken ct) => 
+        await roleService.GetAllAsync(ct)
             is Role[] roles
                 ? TypedResults.Ok(roles)
                 : TypedResults.NotFound();
-    }
 }

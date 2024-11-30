@@ -27,51 +27,39 @@ public class DummyEndpoint : IEndpoint
         dummyGroup.MapDelete("/{id}", Delete).HasApiVersion(new ApiVersion(2.0));
     }
 
-    private async Task<IResult> GetAll(IDummyService dummyService, CancellationToken ct)
-    {
-        return await dummyService.GetAllAsync(ct) 
+    private async Task<IResult> GetAll(IDummyService dummyService, CancellationToken ct) =>
+        await dummyService.GetAllAsync(ct) 
             is DummyModel[] dummies
                 ? TypedResults.Ok(dummies)
                 : TypedResults.NotFound();
-    }
 
-    private async Task<IResult> GetComplete(IDummyService dummyService, CancellationToken ct)
-    {
-        return await dummyService.GetCompleteAsync(ct)
+    private async Task<IResult> GetComplete(IDummyService dummyService, CancellationToken ct) =>
+        await dummyService.GetCompleteAsync(ct)
             is List<DummyModel> dummies
                 ? TypedResults.Ok(dummies)
                 : TypedResults.NotFound();
-    }
 
-    private async Task<IResult> Get(IDummyService dummyService, long id, CancellationToken ct)
-    {
-        return await dummyService.GetAsync(id, ct)
+    private async Task<IResult> Get(IDummyService dummyService, long id, CancellationToken ct) =>
+        await dummyService.GetAsync(id, ct)
             is DummyModel dummy
                 ? TypedResults.Ok(dummy)
                 : TypedResults.NotFound();
-    }
 
-    private async Task<IResult> Create(IDummyService dummyService, DummyModel dummyModel, CancellationToken ct)
-    {
-        return await dummyService.CreateAsync(dummyModel, ct)
-        is DummyModel dummy
+    private async Task<IResult> Create(IDummyService dummyService, DummyModel dummyModel, CancellationToken ct) =>
+        await dummyService.CreateAsync(dummyModel, ct)
+            is DummyModel dummy
                 ? TypedResults.CreatedAtRoute(routeName: "GetDummy", routeValues: new { id = dummy.Id }, value: dummy)
                 : TypedResults.BadRequest();
-    }
 
-    private async Task<IResult> Update(IDummyService dummyService, DummyModel dummyModel, CancellationToken ct)
-    {
-        return await dummyService.UpdateAsync(dummyModel, ct)
+    private async Task<IResult> Update(IDummyService dummyService, DummyModel dummyModel, CancellationToken ct) => 
+        await dummyService.UpdateAsync(dummyModel, ct)
             is DummyModel dummy
                 ? TypedResults.Ok(dummy)
                 : TypedResults.BadRequest();
-    }
 
-    private async Task<IResult> Delete(IDummyService dummyService, int id, CancellationToken ct)
-    {
-        return await dummyService.DeleteAsync(id, ct)
+    private async Task<IResult> Delete(IDummyService dummyService, int id, CancellationToken ct) => 
+        await dummyService.DeleteAsync(id, ct)
             is (not null or > 0)
                 ? TypedResults.Ok()
                 : TypedResults.NotFound();
-    }
 }
