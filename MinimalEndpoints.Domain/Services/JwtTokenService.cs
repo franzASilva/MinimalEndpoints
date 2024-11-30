@@ -27,7 +27,7 @@ public sealed class JwtTokenService(IConfiguration configuration) : IJwtTokenSer
             Expires = DateTime.UtcNow.AddMinutes(configuration.GetValue<int>("Jwt:ExpirationInMinutes")),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             Issuer = configuration.GetValue<string>("Jwt:Issuer"),
-            Audience = configuration.GetValue<string>("Jwt:Audience"),
+            Audience = configuration.GetValue<string>("Jwt:Audience")
         };
 
         var token = tokenHandler.CreateToken(tokenDescriptor);

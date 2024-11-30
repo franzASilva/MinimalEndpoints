@@ -1,6 +1,6 @@
 # Minimal API with JWT Auth, Swagger, Api Versioning and HealthChecks.
 **For testing purposes only, pre-created Roles Admin and User and user admin with password 123**
-- [.NET 8](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8/overview);
+- [.NET 9](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-9/overview);
 - [JWT](https://jwt.io/)
 
 <br />

@@ -10,7 +10,10 @@ public static class ApiVersioningExtension
         services.AddApiVersioning(options =>
         {
             options.DefaultApiVersion = new ApiVersion(1.0);
-            options.ApiVersionReader = new UrlSegmentApiVersionReader();
+            options.ApiVersionReader = ApiVersionReader.Combine(
+                new UrlSegmentApiVersionReader(),
+                new HeaderApiVersionReader("X-Api-Version"));
+
         }).AddApiExplorer(options =>
         {
             options.GroupNameFormat = "'v'VV";
