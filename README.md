@@ -1,4 +1,4 @@
-# Minimal API with JWT Auth, Swagger, Api Versioning and HealthChecks.
+# Minimal API with JWT Auth, Swagger, Api Versioning and HealthChecks with UI.
 **For testing purposes only, pre-created Roles Admin and User and user admin with password 123**
 - [.NET 9](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-9/overview);
 - [JWT](https://jwt.io/)
@@ -35,6 +35,26 @@ We can only use DummyEndpoint with Admin or User roles, while in UserEndpoint we
 
 <br />
 <b>Healthcheck with some details</b><br />
-<a href="https://localhost:7101/healthcheck">https://localhost:7101/healthcheck</a><br />
+<a href="https://localhost:7101/healthcheck">https://localhost:7101/ready</a><br />
 
-<img src="https://github.com/user-attachments/assets/019a8079-f7e7-4236-914f-701cd2e94eae" width="500">
+<img src="https://github.com/user-attachments/assets/925ef2b6-e913-4386-b2a5-41e96505ad63" width="500"><br />
+
+<br />
+<b>Healthcheck live for use in containers</b><br />
+
+<img src="https://github.com/user-attachments/assets/6c2ef6d4-f4cf-499e-8007-e0c9edb4c038" width="500"><br />
+
+<br />
+<b>Healthcheck UI</b><br />
+
+<img src="https://github.com/user-attachments/assets/c89553ef-d7e5-4eba-b9b8-0b3e25e85424" width="500"><br />
+
+<br />
+<b>Healthcheck UI - webhooks</b><br />
+
+<img src="https://github.com/user-attachments/assets/14c40144-5404-4fda-b005-39bb99c8cf9c" width="500"><br />
+
+<br />
+<b>Healthcheck UI - webhooks reporting</b><br />
+
+<img src="https://github.com/user-attachments/assets/7bdcff9d-fa20-4ee6-bad6-852055148364" width="500"><br />
