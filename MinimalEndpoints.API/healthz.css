@@ -1,0 +1,8 @@
+﻿:root {
+    --primaryColor: #214e7a;
+    --secondaryColor: #f4f4f4;
+    --bgMenuActive: #4787a0;
+    --bgButton: #214e7a;
+    --logoImageUrl: url('https://avatars.githubusercontent.com/u/30696836?v=4');
+    --bgAside: var(--primaryColor);
+}

@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+﻿using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using MinimalEndpoints.Domain.Model;
-using MinimalEndpoints.Domain.Settings;
 using MinimalEndpoints.Infrastructure.Data;
-using System.Text.Json;
 
 namespace MinimalEndpoints.API.Extensions;
 
@@ -14,6 +12,7 @@ public static class HealthChecksExtension
         services
             .AddHealthChecks()
             .AddCheck("self", () => HealthCheckResult.Healthy(), ["live"])
+            .AddCheck("test", () => HealthCheckResult.Unhealthy(), ["live"]) // test webhook notification
             .AddDbContextCheck<MinimalEndpointsDbContext>();
 
         // others:
@@ -26,14 +25,26 @@ public static class HealthChecksExtension
         // SignalR - AspNetCore.HealthChecks.SignalR
         // Uris - AspNetCore.HealthChecks.Uris
 
+        services.AddHealthChecksUI(options =>
+        {
+            options.SetEvaluationTimeInSeconds(10);
+            options.MaximumHistoryEntriesPerEndpoint(50);
+            options.AddHealthCheckEndpoint("self", "/ready");
+            options.AddWebhookNotification(
+                name: "email",
+                uri: "/api/v1.1/Email",
+                payload: "{ \"message\": \"Report for [[LIVENESS]]: [[FAILURE]] - Description: [[DESCRIPTIONS]]\" }",
+                restorePayload: "{ \"message\": \"[[LIVENESS]] is back to life\" }");
+        }).AddInMemoryStorage();
+
         return services;
     }
 
     public static WebApplication DefineHealthCheckEndpoint(this WebApplication app)
     {
         app.UseHealthChecks(
-            "/health",
-            new HealthCheckOptions { ResponseWriter = CustomResponseWriter }
+            "/ready",
+            new HealthCheckOptions { ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse }
         );
 
         app.UseHealthChecks(
@@ -41,26 +52,12 @@ public static class HealthChecksExtension
            new HealthCheckOptions { Predicate = r => r.Tags.Contains("live") }
         );
 
+        app.UseHealthChecksUI(options =>
+        {
+            options.UIPath = "/healthz";
+            options.AddCustomStylesheet("healthz.css");
+        });
+
         return app;
-    }
-
-    private static Task CustomResponseWriter(HttpContext context, HealthReport healthReport)
-    {
-        context.Response.ContentType = "application/json";
-
-        var result = JsonSerializer.Serialize(new HealthCheckModel
-        (
-            healthReport.Status.ToString(),
-            healthReport.Entries.Select(e => new HealthCheckReportModel
-            (
-                e.Key,
-                e.Value.Status.ToString(),
-                e.Value.Exception?.Message,
-                e.Value.Duration.Milliseconds,
-                e.Value.Description
-            ))
-        ), SerializerSettings.Default);
-
-        return context.Response.WriteAsync(result);
     }
 }
